@@ -1,0 +1,23 @@
+services:
+
+  redmine:
+    build:
+      context: conf
+      dockerfile: docker/Dockerfile
+    container_name: powermine
+    image: powermine:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - RAILS_ENV=production
+    volumes:
+      - ./conf/plugins:/usr/src/redmine/plugins
+      - ./conf/themes:/usr/src/redmine/public/themes
+      - ./storage/files:/usr/src/redmine/files
+      - ./storage/log:/usr/src/redmine/log
+    networks:
+      - powermine
+
+networks:
+  powermine:
+    name: powermine-network
